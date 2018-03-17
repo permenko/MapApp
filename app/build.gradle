@@ -1,0 +1,52 @@
+apply plugin: 'com.android.application'
+
+android {
+  compileSdkVersion 26
+  defaultConfig {
+    applicationId "com.example.permenko.mapapp"
+    minSdkVersion 21
+    targetSdkVersion 26
+    versionCode 1
+    versionName "1.0"
+    testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    buildConfigField 'String', 'API_ENDPOINT', "https://work.gofura.com/api"
+  }
+  buildTypes {
+    release {
+      minifyEnabled false
+      proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+    }
+  }
+  lintOptions {
+    lintConfig file("lint.xml")
+
+    htmlReport true
+    xmlReport true
+    textReport true
+    textOutput 'stdout'
+
+    warningsAsErrors true
+    abortOnError true
+  }
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_1_8
+    targetCompatibility JavaVersion.VERSION_1_8
+  }
+}
+
+dependencies {
+  implementation fileTree(dir: 'libs', include: ['*.jar'])
+  implementation "com.android.support:appcompat-v7:${versions.appcompat}"
+  implementation 'com.google.android.gms:play-services-maps:11.8.0'
+
+  // Network
+  implementation "com.squareup.retrofit2:retrofit:${versions.retrofit}"
+  implementation "com.squareup.retrofit2:converter-gson:${versions.retrofit}"
+  implementation "com.squareup.retrofit2:converter-scalars:${versions.retrofit}"
+  implementation "com.squareup.retrofit2:adapter-rxjava:${versions.retrofit}"
+  implementation "com.squareup.okhttp3:okhttp:${versions.okhttp}"
+  debugImplementation "com.squareup.okhttp3:logging-interceptor:${versions.okhttp}"
+  implementation "com.google.code.gson:gson:${versions.gson}"
+
+  implementation "io.reactivex.rxjava2:rxjava:2.1.10"
+}
