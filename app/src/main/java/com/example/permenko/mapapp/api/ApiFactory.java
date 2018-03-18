@@ -17,7 +17,7 @@ public class ApiFactory {
 
   @NonNull
   public static FuraApi furaApi() {
-    if (furaApi != null) furaApi = buildRetrofit().create(FuraApi.class);
+    if (furaApi == null) furaApi = buildRetrofit().create(FuraApi.class);
     return furaApi;
   }
 
@@ -33,7 +33,7 @@ public class ApiFactory {
 
   @NonNull
   private static OkHttpClient okHttpClient() {
-    if (okHttpClient != null) {
+    if (okHttpClient == null) {
       okHttpClient = new OkHttpClient.Builder()
           .addInterceptor(new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BASIC))
           .build();
