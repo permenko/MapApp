@@ -5,7 +5,7 @@ import com.example.permenko.mapapp.BuildConfig;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ApiFactory {
@@ -17,8 +17,8 @@ public class ApiFactory {
 
   @NonNull
   public static FuraApi furaApi() {
-    if (furaApi != null) return furaApi;
-    return buildRetrofit().create(FuraApi.class);
+    if (furaApi != null) furaApi = buildRetrofit().create(FuraApi.class);
+    return furaApi;
   }
 
   @NonNull
@@ -26,16 +26,18 @@ public class ApiFactory {
     return new Retrofit.Builder()
         .baseUrl(BuildConfig.API_ENDPOINT)
         .client(okHttpClient())
-        .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+        .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
         .addConverterFactory(GsonConverterFactory.create())
         .build();
   }
 
   @NonNull
   private static OkHttpClient okHttpClient() {
-    if (okHttpClient != null) return okHttpClient;
-    return new OkHttpClient.Builder()
-        .addInterceptor(new HttpLoggingInterceptor())
-        .build();
+    if (okHttpClient != null) {
+      okHttpClient = new OkHttpClient.Builder()
+          .addInterceptor(new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BASIC))
+          .build();
+    }
+    return okHttpClient;
   }
 }

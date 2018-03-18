@@ -7,26 +7,24 @@ import java.util.List;
 
 public final class PlacesResponse implements Serializable {
   @SerializedName("pageSize") private int pageSize;
-  @SerializedName("data") @NonNull private Data data;
+  @SerializedName("hasMorePages") private boolean hasMorePages;
+  @SerializedName("data") @NonNull private List<PlaceResponse> places;
 
-  public PlacesResponse(int pageSize, @NonNull Data data) {
+  public PlacesResponse(int pageSize, boolean hasMorePages, @NonNull List<PlaceResponse> places) {
     this.pageSize = pageSize;
-    this.data = data;
+    this.hasMorePages = hasMorePages;
+    this.places = places;
   }
 
-  public int getPageSize() {
+  public int pageSize() {
     return pageSize;
   }
 
-  public List<PlaceResponse> places() {
-    return data.places;
+  public boolean hasMorePages() {
+    return hasMorePages;
   }
 
-  private final class Data {
-    @NonNull private List<PlaceResponse> places;
-
-    public Data(@NonNull List<PlaceResponse> places) {
-      this.places = places;
-    }
+  @NonNull public List<PlaceResponse> places() {
+    return places;
   }
 }

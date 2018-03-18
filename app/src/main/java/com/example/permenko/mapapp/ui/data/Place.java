@@ -2,20 +2,24 @@ package com.example.permenko.mapapp.ui.data;
 
 import android.support.annotation.NonNull;
 import com.example.permenko.mapapp.api.data.PlaceResponse;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.maps.android.clustering.ClusterItem;
 
-public class Place {
+public class Place implements ClusterItem {
   private int id;
   private int categoryId;
   @NonNull private String name;
-  private long lat;
-  private long lng;
+  private double lat;
+  private double lng;
+  @NonNull private LatLng latLng;
 
-  public Place(int id, int categoryId, @NonNull String name, long lat, long lng) {
+  public Place(int id, int categoryId, @NonNull String name, double lat, double lng) {
     this.id = id;
     this.categoryId = categoryId;
     this.name = name;
     this.lat = lat;
     this.lng = lng;
+    latLng = new LatLng(lat, lng);
   }
 
   @NonNull public static Place create(@NonNull PlaceResponse placeResponse) {
@@ -34,11 +38,15 @@ public class Place {
     return name;
   }
 
-  public long lat() {
+  public double lat() {
     return lat;
   }
 
-  public long lng() {
+  public double lng() {
     return lng;
+  }
+
+  @Override public LatLng getPosition() {
+    return latLng;
   }
 }

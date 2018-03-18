@@ -1,16 +1,16 @@
 package com.example.permenko.mapapp.api.data;
 
-import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import com.google.gson.annotations.SerializedName;
 
 public class PlaceResponse {
   @SerializedName("id") private int id;
-  @SerializedName("category_id") private int categoryId;
-  @SerializedName("name") @NonNull private String name;
-  @SerializedName("lat") private long lat;
-  @SerializedName("lng") private long lng;
+  @SerializedName("categoryId") private int categoryId;
+  @SerializedName("name") @Nullable private String name;
+  @SerializedName("lat") private double lat;
+  @SerializedName("lng") private double lng;
 
-  public PlaceResponse(int id, int categoryId, @NonNull String name, long lat, long lng) {
+  public PlaceResponse(int id, int categoryId, @Nullable String name, double lat, double lng) {
     this.id = id;
     this.categoryId = categoryId;
     this.name = name;
@@ -30,11 +30,11 @@ public class PlaceResponse {
     return name;
   }
 
-  public long lat() {
+  public double lat() {
     return lat;
   }
 
-  public long lng() {
+  public double lng() {
     return lng;
   }
 }
