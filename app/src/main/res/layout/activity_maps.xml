@@ -1,8 +1,26 @@
-<fragment xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:tools="http://schemas.android.com/tools"
-  android:id="@+id/map"
-  android:name="com.google.android.gms.maps.SupportMapFragment"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
-  tools:context="com.example.permenko.mapapp.ui.map.MapActivity"
-  />
+  >
+
+  <fragment
+    android:id="@+id/map"
+    android:name="com.google.android.gms.maps.SupportMapFragment"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.permenko.mapapp.ui.map.MapActivity"
+    />
+
+  <ProgressBar
+    android:id="@+id/loadingView"
+    android:layout_width="32dp"
+    android:layout_height="32dp"
+    android:layout_gravity="center_horizontal"
+    android:layout_marginTop="16dp"
+    android:alpha="0"
+    android:background="@drawable/circle_black"
+    android:padding="4dp"
+    />
+
+</FrameLayout>

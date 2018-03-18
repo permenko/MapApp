@@ -26,22 +26,24 @@ public class MapPresenter {
   }
 
   private void loadPlaces(int startId, @NonNull MapView mapView) {
-    places(startId).subscribeWith(new DisposableObserver<List<Place>>() {
-      @Override public void onNext(List<Place> places) {
-        for (Place place : places) {
-          mapView.showPlaces(place);
-        }
-        if (places.size() > 0) loadPlaces(places.get(places.size() - 1).id(), mapView);
-      }
+    places(startId)
+        .doOnSubscribe(disposable -> mapView.showLoading())
+        .subscribeWith(new DisposableObserver<List<Place>>() {
+          @Override public void onNext(List<Place> places) {
+            for (Place place : places) {
+              mapView.showPlaces(place);
+            }
+            if (places.size() > 0) loadPlaces(places.get(places.size() - 1).id(), mapView);
+          }
 
-      @Override public void onError(Throwable e) {
-        e.printStackTrace();
-      }
+          @Override public void onError(Throwable e) {
+            e.printStackTrace();
+          }
 
-      @Override public void onComplete() {
-
-      }
-    });
+          @Override public void onComplete() {
+            mapView.hideLoading();
+          }
+        });
   }
 
   @NonNull Observable<List<Place>> places(int startId) {
@@ -61,5 +63,8 @@ public class MapPresenter {
           return places;
         })
         .observeOn(AndroidSchedulers.mainThread());
+  }
+
+  private void cache() {
   }
 }

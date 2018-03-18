@@ -3,6 +3,7 @@ package com.example.permenko.mapapp.ui.map;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
+import android.widget.ProgressBar;
 import com.example.permenko.mapapp.R;
 import com.example.permenko.mapapp.injection.provider.MapPresenterProvider;
 import com.example.permenko.mapapp.ui.data.Place;
@@ -14,12 +15,14 @@ import com.google.maps.android.clustering.ClusterManager;
 public class MapActivity extends FragmentActivity implements OnMapReadyCallback, MapView {
   private GoogleMap map;
   private ClusterManager clusterManager;
+  private ProgressBar loadingView;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_maps);
     // Obtain the SupportMapFragment and get notified when the map is ready to be used.
+    loadingView = findViewById(R.id.loadingView);
     SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
         .findFragmentById(R.id.map);
     mapFragment.getMapAsync(this);
@@ -29,6 +32,14 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
   @Override
   public void onMapReady(GoogleMap googleMap) {
     map = googleMap;
+  }
+
+  @Override public void showLoading() {
+    loadingView.animate().alpha(1f);
+  }
+
+  @Override public void hideLoading() {
+    loadingView.animate().alpha(0f);
   }
 
   @Override public void showPlaces(@NonNull Place place) {
