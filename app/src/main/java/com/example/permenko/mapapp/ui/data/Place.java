@@ -2,6 +2,7 @@ package com.example.permenko.mapapp.ui.data;
 
 import android.support.annotation.NonNull;
 import com.example.permenko.mapapp.api.data.PlaceResponse;
+import com.example.permenko.mapapp.db.data.PlaceRealmModel;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.maps.android.clustering.ClusterItem;
 
@@ -24,6 +25,10 @@ public class Place implements ClusterItem {
 
   @NonNull public static Place create(@NonNull PlaceResponse placeResponse) {
     return new Place(placeResponse.id(), placeResponse.categoryId(), placeResponse.name(), placeResponse.lat(), placeResponse.lng());
+  }
+
+  @NonNull public static Place create(@NonNull PlaceRealmModel placeRealmModel) {
+    return new Place(placeRealmModel.id(), placeRealmModel.categoryId(), placeRealmModel.name(), placeRealmModel.lat(), placeRealmModel.lng());
   }
 
   public int id() {

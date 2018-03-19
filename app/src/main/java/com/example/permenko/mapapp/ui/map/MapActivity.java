@@ -26,12 +26,17 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
     SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
         .findFragmentById(R.id.map);
     mapFragment.getMapAsync(this);
-    MapPresenterProvider.mapPresenter().attachView(this);
+  }
+
+  @Override protected void onDestroy() {
+    MapPresenterProvider.mapPresenter().detachView();
+    super.onDestroy();
   }
 
   @Override
   public void onMapReady(GoogleMap googleMap) {
     map = googleMap;
+    MapPresenterProvider.mapPresenter().attachView(this);
   }
 
   @Override public void showLoading() {
